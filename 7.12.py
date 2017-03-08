@@ -1,0 +1,98 @@
+def LeapYear(year):
+    status = False
+    if year % 100 == 0 and year % 400 == 0:
+        status = True
+    elif year % 100 == 0 and year % 400 != 0:
+        status = False
+    elif year % 4 == 0:
+        status = True
+    else:
+        status = False
+    return status
+
+def dateValidator(date):
+    month = int(date[:2])
+    day = int(date[3:5])
+    year = int(date[6:10])
+    if 1 <= year:
+        if month == 1:
+            if 1 <= day <= 31:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+        if month == 2:
+            if LeapYear(year) == True and 1 <= day <= 29:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            elif LeapYear(year) == False and 1 <= day <= 28:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+        if month == 3:
+            if 1 <= day <= 31:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+        if month == 4:
+            if 1 <= day <= 30:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+        if month == 5:
+            if 1 <= day <= 31:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+        if month == 6:
+            if 1 <= day <= 30:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+        if month == 7:
+            if 1 <= day <= 31:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+        if month == 8:
+            if 1 <= day <= 31:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+        if month == 9:
+            if 1 <= day <= 30:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+        if month == 10:
+            if 1 <= day <= 31:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+        if month == 11:
+            if 1 <= day <= 30:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+        if month == 12:
+            if 1 <= day <= 31:
+                print("\n{}/{}/{} is a valid date".format(month, day, year))
+            else:
+                print("\n{}/{}/{} is not a valid date".format(month, day, year))
+
+def main():
+    print()
+    print("This app validates dates you enter.\n")
+    D = input("What's the date? Enter as mm/dd/yyyy\n\n")
+    try:
+        dateValidator(D)
+    except ValueError:
+        print("\nThe numbers you entered weren't quite right…")
+    except NameError:
+        print("\nOnly numbers please.")
+    except TypeError:
+        print("\nThe numbers you entered weren't quite right…")
+    except SyntaxError:
+        print("\nType it correctly next time buddy.")
+    except:
+        print("\nGeneral error. Terribly sorry.")
+    print()
+main()

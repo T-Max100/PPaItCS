@@ -1,0 +1,51 @@
+Zombit infection
+
+Ok, it's taking in a list of lists. For example this is the first one:
+population = [[1, 2, 3], [2, 3, 4], [3, 2, 1]]
+Transforming this into a regular grid will make this easier to conceptualize:
+population = [
+              [1, 2, 3],
+              [2, 3, 4],
+              [3, 2, 1]
+             ]
+The 1 in the first row is at location [0][0], the 2 to the right of that 1 is at location [0][1], the 2 right below the 1 at [0][0] is at [1][0].
+
+The function is going to start at [y][x] in the population, if it contains a value less than or equal to . The next loop will look through the grid for values of -1.
+
+def answer(population, x, y, strength):
+  if population[y][x] <= strength:
+    population[y][x] = -1
+  for row in range(len(population)):
+    for column in range(len(row)):
+      if population[row][column] == -1:
+        if (0 < row + 1 < len(population) and 0 < column + 1 < len(row)) or (0 < row + 1 < len(population) and 0 < column + 1 < len(row))
+
+answer(population, x, y, strength)
+
+Thinking about the logic of this thing. Clearly I want to grab a number at some place in the grid. I'm going to check if that number is equal to -1. If it isn't move on, if it is… then check to see the surroundings.
+
+Maybe I should simplify this as just "if row + 1 > len(population): continue, if row - 1 < 0: continue, if column + 1 > len(row): continue, if column - 1 < 0: continue"
+
+Since there are always 4 options maybe I should just create a range of 4 and iterate through that.
+for i in range(4):
+  if column + 1 < len(row) and population[row][column + 1] <= strength:
+    population[row][column + 1] <= -1
+  elif …
+
+def answer(population, x, y, strength):
+  if population[y][x] <= strength:
+    population[y][x] = -1
+  for row in range(len(population)):
+    for column in range(len(row)):
+      if population[row][column] == -1:
+        if column + 1 < len(population[row]) and population[row][column + 1] <= strength:
+          population[row][column + 1] = -1
+        if column - 1 > 0 and population[row][column - 1] <= strength:
+          population[row][column - 1] = -1
+        if row + 1 < len(population) and population[row + 1][column] <= strength:
+          population[row + 1][column] = -1
+        if row - 1 > 0 and population[row - 1][column] <= strength:
+          population[row - 1][column] = -1
+
+Well, in the end the code I wrote passed 4/5 tests. Not bad, but not perfect. I have no idea what that 4th test was that I didn't pass. I submitted someone else's working code instead. I have to look through their code and mine to see what cases his (assuming man?) covered and mine didn't.
+# https://github.com/rstuart85/google-foobar/blob/master/2_1_zombit_infection.py

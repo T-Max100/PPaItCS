@@ -1,0 +1,23 @@
+from graphics import *
+
+def main():
+    win = GraphWin()
+    shape = Rectangle(Point(0,25), Point(25,0))
+    shape.setOutline("red")
+    shape.setFill("red")
+    shape.draw(win)
+    p = win.getMouse()
+    #print(getMouse)
+    c = shape.getCenter()
+    #print(getCenter)
+    dx = p.getX() - c.getX()
+    #print(dx)
+    dy = p.getY() - c.getY()
+    #print(dy)
+    shape = shape.clone()
+    shape.move(dx,dy)
+    shape.draw(win)
+    Text(Point(100,100), "Click again to quit!").draw(win)
+    win.getMouse()
+    #win.close()
+main()

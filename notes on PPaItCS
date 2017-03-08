@@ -1,0 +1,532 @@
+computer should read a line with readline()
+
+better yet, it should just use for line in infile
+that way we could just have the contents of the line and manipulate that as
+necessary. E.g. the first line after the initial number is going to be a
+name and a two-digit number. The two digit number can be captured with line[-2:], while the name can be captured with line[:-3].
+
+Changing it to a three digit number to accommodate the 100.
+
+So now the two digit number can be captured with line[-3:], while the name can be captured with line[:-4].
+
+________________________________________________________________________
+
+Have a text file full of lots of numbers all ranging from 0 to 10 though.
+File is read into the program.
+Create a list with 11 characters in it. They may as well be 0s though.
+Set up for line in infile: ... Set up for loop in range(11). When the i = 0. program reads a line, it's got a number somewhere between 0 and 10.
+
+nums = file.read()
+list[i] = nums.count(i)
+
+________________________________________________________________________
+
+the function takes in the parameters guess and x. Where guess is supposed to be the number of guesses.
+
+Maybe I should use a in-loop variable of r. So it'd look like r = (r + (x / r)) / 2
+
+ return r
+
+ I guess I could just follow the explicit direction and only provide the very next guess. In that case it would be nextguess = (guess + x/guess)/2, return nextguess
+
+Chapter 6 has a few weird errors regarding problems from the 3rd chapter.
+
+________________________________________________________________________
+
+The main circle starts at 25 in the original (200 px wide box, center at 100, circle 75 px in radius). The smaller circle starts at 61.029 ≈ 61. It's 15 px in radius so it begins at 46.029 ≈ 46. So the left edge of the main circle begins at 25 in the x and the left edge of the smaller circle begins at 46 in the x. Making their gap 21 pixels. 21 pixels represents 10.5% of the x axis.
+
+In absolute terms the center of the main circle in the new one is (60,100). The center of the smaller circle is (21,100.3875)
+
+y for the big circle that represents the mouth is 115. That's for the point in the upper left corner.
+
+oval coords (61.029, 115) and (138.971, 150). This indicates that it's going from lower left to upper right. Basically 79 pixels in width and 35 pixels in height. The …
+
+________________________________________________________________________
+
+Babysat from 15:15 to 20:00. Using the method I set up the ending hour would be 20 and the starting hour would be 15. The hours variable would be derived from 20-15=5 and be given the value of 5 hours. The minutes on the other hand would end up as 0-15=-15, which I'm afraid won't be interpreted properly without more work than I'd like. Converting the minutes to decimal times might make this easier to start with rather than just doing it later. 00 should be considered 60 or 100.
+
+15 minutes converted to decimal is 15/60 = 1/4 = 0.25. Ok it seems like no matter what the minutes value is it can simply be divided by 60 to get a decimal thing immediately. So following along again that -15 value would be treated like so: 0-15=-15 -> -15/60=-0.25.
+
+No matter what the minutes value is now an hours value and can be added directly to the hours value from earlier.
+
+Post 9 PM stuff.
+
+If babysitter gets off at 10 PM, i.e. 22:00, then subtract 21 from HE. In this case it would imply 22-21=1. Meaning that there is only one hour past 9. Still the time was from 15:15 to 22:00. I suppose this would mean that we should now derive hours from 9 PM. So 21 - HS, i.e. 21-15=6.
+
+15:15 to 20:00 is 5 hours plus -0.25 hours, which sums to 4.75 hours. If were to try and recover the actual time from that decimal number I'd say m = (Thours - floor(Thours))*60 then write print("Your total time was {0}:{1}, or {0} hours and {1} minutes".format(hours,m))
+
+I can actually just write this in the function.
+
+How many minutes were after 9? Let's see. 15:15 to 22:00 is really 6 hours and 45 minutes total. 22-21=1. And then 21:00-15:15 equals 6+-0.25=5.75. So really I just have to get the time from 9 and then subtract this from the total time.
+
+Wait… backup. It's really the gap from 21 to the ending time. So let's just the ending minutes. Simple.
+
+Final problem is floating point rounding errors, but I don't think I can solve that with only the information given up to this point. I could probably import decimal to take care of it but that seems like overkill.
+
+^ days later solution ^
+
+Just add 0.5 and floor divide with 1. Make everything pennies.
+
+________________________________________________________________________
+
+I've gotta eventually add that intersection part to the problem so it doesn't accept scores outside of the target area. make those equal to 0.
+
+The functions don't change the main variables. They only change their local variables. But, knowing that, they can also change the value of some mutable items like lists.
+
+Maybe I should do a range thing and just make it "p". So…
+
+total = 0
+for i in range(5):
+  p = window.getMouse()
+    p.draw(window)
+    if 0 <= p.getX() <= 5 and 0 <= p.getY() <= 5:
+        total += 1
+
+Ok, that above, worked. But the problem is that it isn't really checking for a hit within the circle so much as it's checking for a hit within the bounding box/square that contains the circle. Or over laps the circle. Honestly, I'd have to test to see which is which.
+
+So this now requires looking at that intersection shite.
+
+If x value AND y value are between here and here then use this radius. If they are outside …
+I went backwards instead because the x and y were guaranteed from the click. Recall the circle formula that r = sqrt(x^2+y^2). So what's needed is for the square root to fall between specific radii to count as a particular point.
+
+Went to Painrinya for the circle idea which I improved upon.
+
+Next time don't forget references and do a better coordinate system.
+
+________________________________________________________________________
+
+To simplify thought process, think only in one dimension first. A line going from -360 to 360.
+
+PosA = c.getCenter
+PosB = c.getCenter (after some stuff happens)
+
+move right
+If center is under 360 and PosB - PosA is positive then continue moving right.
+
+turn around
+If center is at 360 or over and PosB - PosA is positive then begin moving left.
+
+move left
+If center is under 360 and PosB - PosA is negative then continue moving left.
+
+turn around
+If center is at -360 or less and PosB - PosA is negative then begin moving right.
+
+maybe I should just consider the whole line from -360 to 360? So to move left if it's between -360 and 360 and PosB - PosA is positive it's moving right and should continue to.
+
+Once it hits 360 or -360 and goes beyond it it should move in the opposite direction.
+
+In main, if shape.getCenter is at or beyond 360 choose the function "goLeft"
+
+if (condition): goLeft, else: goRight
+condition has to be about PosB minus PosA.
+How to get initial PosA and PosB? Program begins with shape being made and it's made either in the center or at a click. That initial getCenter will be PosA. The default action is to go right (aka choose goRight function). After a loop through the goRight function it returns to the position in main(). The new position should be PosB. Before the next loop through the PosB info should be shuttled off to the PosA variable and the results of the next loop should be the new PosB.
+
+If it's on the negative number side things might work out differently. If PosB is -5 and PosA is -4 then PosB - PosA is equal to -1. Now -1 is a negative number (obviously), and the rule says that is the results of the difference operation come up negative then continue moving left.
+
+I can either work with -360 to 360 and use abs values or I can separate things into 0 to 360 or -360.
+
+Maybe I should focus on functions that move up and down for one and then left and right for another?
+
+def moveUpDown(shape):
+  c = shape.getCenter()
+  if 324 <= c.getX():
+    dx = -1
+  else:
+    dx = 1
+
+def moveRightLeft(shape):
+  c = shape.getCenter()
+  if 324 <= c.getX():
+    dy = -1
+  else:
+    dy = 1
+
+So those functions check the 360 stuff (I might have to add the -360 stuff afterwards). The main loop checks whether it's going right/left or up/down. If the subtraction stuff is getting positive results it's going right or up and the opposite is also true.
+
+def moveTo(shape):
+  dx = moveUpDown(shape)
+  dy = moveRightLeft(shape)
+  shape.move(dx, dy)
+
+  Use a variable as a flag? Like if posB - posA is negative then D is equal to -1. Use that variable D in the functions to control the direction.
+
+  So D = posB - posA -> def moveUpDown(shape, D) -> if D == -1 then dx = -1, else dx = 1
+
+  I guess I just have to make sure that the pos variables are working well.
+
+________________________________________________________________________
+
+num = 1
+i = 1
+while num <= 19:
+  num += (i*2-1)
+
+num = 0
+while n >= 1:
+  print(num)
+  n /= 2
+  num += 1
+
+improvement
+
+ num = -1
+n = int(input("Enter a number to divide by 2 a bunch of times: "))
+while n >= 1:
+	print(n)
+	n /= 2
+	num += 1
+print("That's", num)
+
+________________________________________________________________________
+
+The command/function window.getMouse() gets something. But what? Open graphics and whatnot and take a look.
+
+Looks like getMouse() is a function of GraphWin(). It returns a Point object. Point() inherits from GraphicsObject(). GraphicsObject() might return floats. I'm thinking that I might just use getX()window.getMouse() and getY()window.getMouse() and check whether the click is not in the range.
+
+For drawing a line it looks like I have to use the last click point as p1 and the next click point as p2. UPDATE: The line is drawn at the end. So I'm just going to collect the points in a list.
+
+Need to make a rectangle first. Call for the rectangle from the labeled window function.
+
+Main -> Create Window -> Draw Points -> end
+Create Window -> 1) greet 2) doneBox 3) drawPoints
+drawPoints -> collects points and stores them in specific sums.
+
+Since the values are going to be stored in lists the whole program should have access to them. Provided I do this correctly.
+
+This stackoverflow page on appending items to a list of lists in python is awesome:
+http://stackoverflow.com/questions/8713620/appending-items-to-a-list-of-lists-in-python
+
+Might not even need lists to do this but I feel comfortable with them storing all of the values for later inspection. Using a tuples or sets would be even better but he hasn't touched on that yet.
+
+best of n games simulation racquetball
+
+I know there's a simple way to change this to do best of n, but how much should I change the presentation afterwards? Best of n is always going to be if n % 2 == 0: if playerA or playerB reach n/2 + 1 wins break and go to printSummary. In print summary return wins but relay that player won best of n games. Maybe each player?
+
+If n isn't even then go to the else option which returns (n + 1)/2
+
+Turns out that this works to avoid the MultipleInstanceError:
+from IPython.core.debugger import Tracer
+Tracer()() #this one triggers the debugger
+
+Simulating tennis game
+
+I think I flubbed this one. The rally points look normal but the regular game one looks very strange. Always a tie or off by one, always a return of 4 points to 0 (depending on serve). I should probably separate out the game styles but I just don't want to make another function. In P's program he's separated them out but his random() values are all different and it makes it impossible to judge the difference clearly. I tried fixing this with a fixed random result "r" and it messed up in ways that I couldn't successfully track (it looked like the gameOver function wasn't triggering though).
+
+craps
+
+You have an initial roll. If the initial roll is a 7 or an 11 (out of 12) then you win. If it's a 2, 3, or 12, you lose. If it's any other number (i.e. 1, 4, 5, 6, 8, 9, 10), you then have to roll again.
+
+When you roll again there are only two outcomes that matter. 1) rolling a 7. If you roll a 7 at this point you lose. If you roll the same number as your initial roll you win. Right now I have this at the top of my singleCrapsToss function definition: a = b = 0. I made this to store two values that would be updated in succession depending on the outcome of subsequent rolls. It seems that this was in fact unnecessary. But I'm writing it down here just in case it is. I should probably learn to be more detached about this stuff.
+
+Rewritten version in jupyter notebook:
+from random import randint
+
+def main():
+    printIntro()
+    n = getInputs()
+    estimation = process(n)
+    finish(estimation)
+
+def printIntro():
+    print("\nThis app simulates craps games.")
+
+def getInputs():
+    n = int(input("\nHow many games do you want to simulate? "))
+    return n
+
+def process(n):
+    wins = 0
+    for i in range(n):
+        if singleCrapsToss() == "win":
+            wins += 1
+    return wins/n
+
+def singleCrapsToss():
+    game0 = randint(1, 12)
+    if game0 in {2, 3, 12}:
+        return "lose"
+    elif game0 in {7, 11}:
+        return "win"
+    else:
+        return rollForPoint(game0)
+
+def rollForPoint(game0):
+    nextToss = randint(1,12)
+    while nextToss not in {game0, 7}:
+        nextToss = randint(1,12)
+    if nextToss == 7:
+        return "lose"
+    elif nextToss == game0:
+        return "win"
+
+
+def finish(estimation):
+    print("\nYour estimated probability of winning is {}. Which is {}‰ or {}%.".format(estimation, estimation*1000, estimation*100))
+if __name__ == '__main__': main()
+
+blackjack pt 1
+
+Usual stuff, intro, get inputs, process inputs, output outputs.
+
+What are the inputs here? Instructions state that the game is the user vs the dealer. Alright I'm assuming the use of randint in this. It'll be anything from 1 to 10 inclusively and the 1 is a special card. Maybe I can just use a range object. So a set containing "A" and the range 2 through 10 inclusively? Ok apparently can't do that. So found other solution to problems:
+
+from random import choice
+
+B = tuple("A") + tuple(range(2,11))
+
+print(choice(B))
+
+It doesn't have to be a tuple, it could be a list or a set or something I guess.
+
+Choice is the better import, sample is interesting (returns multiple random items if you want) but only returns a list (naturally).
+
+Must introduce choice for user, a "hit" option if you will. So it looks like the initial state has the dealer deal 2 cards to the user and have two cards for themselves. I guess I'll just store the results of the two choice calls in a list.
+
+Alright, intro (play (y/n)?), dealing, break dealing loop if user busts or dealer does. Work will go into dealing loop then.
+
+def main():
+  ans = printIntro()
+  result = dealGame(ans)
+  printEnd(result)
+
+def printIntro():
+  input("Play a game of blackjack (y/n)? ")
+
+def dealGame(ans):
+  if ans in {"y", "Y", "yes", "Yes", "YES"}:
+    while ans in {"y", "Y", "yes", "Yes", "YES"}:
+      ans = input("Continue playing? ")
+
+
+Maybe I'm getting ahead of myself with that version of deal game. It'll just keep going until I put in any answer not in that dict. Right now I just need to figure out how to deal to two things (dealer & user).
+
+def dealGame(ans):
+  dealerHand = userHand = []
+  if ans in {"y", "Y", "yes", "Yes", "YES"}:
+    for i in range(2):
+      dealerHand.append(choice(D))
+      userHand.append(choice(D))
+    if (1 in dealerHand and sum(dealerHand) == 11) and (1 in userHand and sum(userHand) == 11):
+      return "Both Win!"
+    elif (1 in userHand and sum(userHand) == 11):
+      return "User Wins!"
+    elif (1 in dealerHand and sum(dealerHand) == 11):
+      return "Dealer Wins!"
+    else:
+      return blackjack(dealerHand, userHand)
+  else:
+    return "uninterested"
+
+def blackjack(dealerHand, userHand):
+  hasAce = False
+  while sum(dealerHand) < 17:
+    if 1 in dealerHand and sum(dealerHand) > 5:
+      hasAce = True
+      dealerHand[dealerHand.index(1)] = 11
+    else:
+      dealerHand.append(choice(D))
+  while sum(userHand) <= 21:
+    ans = input("Hit? ")
+    if ans in {"y", "Y", "yes", "Yes", "YES"}:
+      userHand.append(choice(D))
+      print(sum(userHand))
+    else:
+      if (sum(dealerHand) <= sum(userHand) <= 21) or (sum(dealerHand) > 21):
+        return "User Wins!"
+      else:
+        return "Dealer Wins!"
+
+def printEnd(result):
+  print(result)
+
+If anyone gets the "A" the computer throws up a TypeError when trying to sum the contents of the list. Might be better to just skip the whole thing with the str and just deal with the int of 1. Check lists/hands for membership and if 1 is there look again at the sum.
+
+I could've done this with a running sum instead of a list of numbers. In fact I might do that next as an alt.
+
+I might have to make an extra function that determines if the game is over or not.
+
+def over?(dealerHand, userHand):
+    if sum(dealerHand) > 21:
+        return True
+    elif sum(userHand) > 21:
+        return True
+    else:
+        return False
+
+Maybe the initial state is that the dealer has enough cards to fit the criteria (i.e. at least up to 17), and then it moves into the game of blackjack with the user.
+
+def dealGame(ans):
+    if ans == yes:
+        stuff
+    else:
+        quit
+
+And the "stuff" here is supposed to describe the dealer getting the relevant cards.
+
+def dealGame(ans):
+    if ans == yes:
+        hasAce = False
+        while sum(dealerHand) < 17:
+            if 1 in dealerHand and sum(dealerHand) > 5:
+                hasAce = True
+                dealerHand[dealerHand.index(1)] = 11
+            else:
+                dealerHand.append(choice(D))
+        if (hasAce and sum(dealerHand) == 11):
+            return "Dealer Wins!"
+        else:
+            return blackjack(dealerHand, userHand)
+    else:
+        quit
+
+I think I'll call the new function dealDealerHand. But then again perhaps not.
+
+9.9
+
+I'm gonna have to make a loop that contains all of the stuff. Maybe I should make it in main to keep things neat? So it would look like:
+
+def main():
+ans = printIntro()
+while ans in {}:
+result = dealDealerHand(ans)
+ans = printIntro()
+
+if __name__ == '__main__': main()
+
+play a game? (y/n)
+while y:
+do stuff
+play a game? (y/n)
+
+Inside stuff produce report of probability etc.
+
+After dealer assigned first card produce probability report. Report for each subsequent card.
+
+Calculating bust probability. If the dealer's up card is 6 for example then the probability is 0 because there's no 15 card that can follow (i.e. 21 - 6 = 15).
+When the accumulation gets to 12 (say the next card after 6 was another 6) then there are subsequent single card draws that can cause the dealer to bust (i.e. 21 - (6 + 6) = 9 or 21 - 12 = 9). At 12 there is only 1 card that can cause the dealer to bust and that's the 10 card. But the 10 represents 1/10 cards. As the total approaches 21 the probability increases to 100% or 1/1.
+
+So the total seems to be key here. Maybe 100 - (21 - total) %? Let's see what that would give us with the last hand as an example.
+[8, 3, 1, 9]
+That gives us 100 - (21 - 8) = 100 - 13 = 87 %
+Then 100 - (21 - 11) = 100 - 10 = 90 %
+Then 100 - (21 - 12) = 100 - 9 = 91 %
+Then 100 - (21 - 21) = 100 - 0 = 100 %
+
+But the above is not what we're going for. At 8, there are no cards that will cause the dealer to bust so the result should be 0 %. How do I represent that? The bust is anything over 21. And there's no single card that can be picked from the infinite deck that will cause a bust.
+Start with total. 8. Know that 21 - 8 is 13, and that 13 isn't in D. So if 21 - total not in D, print 0 %. Next number changes total. 21 - 11 is 10. And nothing higher than 10 is in the deck.
+
+100 * sum(i > (21 - sum(dealerHand)) for i in D)/10 %
+
+I'll have to rewrite this thing to fix some problems. Maybe make a deal function that goes to a dealer deal and a user deal. Then both of those go to a blackjack thing. The dealer will display the first card, have the total calculated, and then we engage in that probability stuff. But it seems that we've gotten the gist of it anyway.
+
+Moving on.
+
+Trying to figure out a way to store some values at least temporarily without doing it in an expensive way. I need temp variables. I've named them a and b. The variable d is going to be given the result of the dice roll. Maybe I should just…
+
+No, no, I think I did it the best way possible that actually fulfills the requirements. The 5 dice are thrown simultaneously and the computer checks if they're all the same automatically. Doing it in some sequential fashion just seems like it isn't following the spirit of the assignment. Moving on.
+
+Graphical 2D random walk
+
+I need 16 lines for this (it's 20 minus the perimeters) the lines will go every 10 units. The first one will be from point (-40, -50) to (-40, 50) then it would continue with those fixed Y values but ascending X values (incrementing by 10). After that it'll switch. So I'll just hold 50 in a variable and use i as the changing amount used by the for loop.
+
+for i in range(10,110,10):
+L = 50
+Line(Point(i - m))
+
+Probably have to do a function in startup called "drawRW" and that makes reference to the random walk algorithm. The random walk algorithm is perfect because it evaluates one thing at a time. The d4 rolls and it comes up whatever it comes up.
+
+Just have to draw a single line right now. The code goes something like: Line(P1,P2).draw
+
+Now I know what P1 is (it's the origin, Point(0,0) or as I've labeled it, O). But P2 is going to be determined by the result of the random walk. Maybe I should named my variables X and Y instead A and B, but we'll see. How do I get P2?
+
+The random walk changes one element at a time. The function takes in the origin point as a position on the cartesian plane (x = [0,0]). Maybe I should make the thing d = something or other…
+
+Assume that problem was solved, how do I shuffle points?
+for i in range(n)
+A = B = 0
+O = Point(0,0)
+Line(O, randomWalk(P1))
+fill = "red"
+draw
+P1 = randomWalk(P1)
+
+randomWalk(P1):
+d4_roll = randrange(4)
+if d4_roll == 0:
+P1.x += 1
+elif d4_roll == 1:
+P1.y += 1
+elif d4_roll == 2:
+P1.x -= 1
+else:
+P1.y -= 1
+
+Ok, it seems to work. But I have to figure out the loop and the shuffle in proper order. Out side of the loop O is defined. The loop is entered and reference is made to O. At the bottom of the loop the value of O is updated with the result of the randomWalk(O) operation.
+
+def drawRW(n):
+    O = Point(0, 0)
+    return L
+
+If it doesn't understand what I'm doing with the drawRW return L in the startup function, then I'll have to define some variables. Like L = drawRW(n) -> L.draw(win). Hopefully it'll workout.
+
+
+Editing from emacs now
+
+10.5
+
+It's asking me to create a method that adds information to a student
+object. The student object should initially have 0 credits and 0
+quality points. So the addGrade function should replace the initial
+credits and quality points. Credits and hours are the same, qpoints is
+just gradePoint times hours.
+
+self.hours += credits
+self.qpoints += (gradePoints * credits)
+
+Either return nothing or return hours and qpoints.
+
+
+________________________________________________________________________
+
+Mouth position is currently a straight horizontal line that's 25 px
+high for the Y axis, and stretches from -20 to 20 along the X axis.
+
+So that implies a lower left corner point of... I guess I'd have to
+figure out how deep I want this thing to go first. But at least I know
+the x values of the bounding box. LL = Point(-20, -Y), UR = Point(20,
++Y).
+
+The old one I'm working from has a Y value of... current Y of center
+minus 9.375, i.e. 100 - 9.375 = 90.625. And that's the lower left!
+
+The upper right is at 68.75!
+
+Ok so that means that the height of the bounding box is 90.625 - 68.75
+= 21.875.
+
+The initial line that makes up the mouth has a left point at
+coordinate (80, 125) and has a right point coordinate at (120, 125)
+
+Ok, let's just work this as 30 for the height of the oval and so 15
+for the height of the mouth (after the box blocking). So that would
+mean a lower left point of (80, 110) and an upper right point at (120,
+140).
+
+________________________________________________________________________
+
+Zelle 12.3:
+
+Write a program to keep track of conference attendees. For each attendee, your program should keep track of name, company, state, and email address. Your program should allow users to do things such as add a new attendee, display info on an attendee, delete an attendee, list the name and email addresses of all attendees, and list the name and email address of all attendees from a given state. The attendee list should be stored in a file and loaded when the program starts.
+
+The program will read the text file and see the entries and know the categories. It will then ask if you'd to like add/remove/display/ an attendee or list all attendees or list only ones from a particular state.
+
+I'm thinking that the max it should take up is about 60 characters. 10 characters for the first name, 10 for the last name, 10 for the company, 2 for the state, and 24 for the email address (56 characters with 4 padding spaces).
+
+Really should probably use a dictionary in this. Like if the attendees name was john doe I could just write guest[first_name] and out would pop "john". Hmm… that's not quite right. This would presume that I know that I'm only working with john doe. What if I were to put in guest[doe, john] and out would pop all the dictionary keys?
+
+The problem description says this thing is built to keep track. Keep track of attendees. It says that the attendee list should be stored in a file and loaded when the program starts. I have a list of attendees right now. I can make a program that loads this list, but what should be done about it after that? The problem description doesn't seem to give any direction for flow here so it seems to be a conditional thing.
+
+I suppose main can offer the conditional. Depending on how the user chooses a different action with the attendee class can be performed. Choices would be A, D, M, L. L should have two options. A and S. I should write up the methods.
+
+I realize after thinking about it that the real object I should be creating is the list. Can I create a class called attendee list? Should I? I guess I should if I have to complete this.
